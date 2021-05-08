@@ -168,8 +168,14 @@ def main(show_directions=True):
                     r = int(input_value[0])
                     c = int(input_value[1])
                     if r in input_list and c in input_list:
-                        break
-                print("Wrong Input")
+                        if board[r - 1, c - 1] == 0.0:
+                            break
+                        else:
+                            print("Given place already filled")
+                    else:
+                        print("Wrong Input")
+                else:
+                    print("Wrong Input")
             
             board[r - 1, c - 1] = 1
             print_board()
