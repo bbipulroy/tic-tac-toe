@@ -1,3 +1,8 @@
+"""
+ID:       21170300697
+Name:     Bipul Roy
+Section:  A
+"""
 import numpy as np
 import sys
 from copy import copy
@@ -127,19 +132,32 @@ def check_game_over(state):
 def main():
     print_board()
 
-    print('Please move by command: row column')
+    print('Please move by command: row<space>column')
     print('row column example: 2 2 (is middle point)')
     print('')
     print('player select example command is 1 or 2')
     print('')
 
-    num = int(input('enter player num (1st or 2nd): '))
+    while True:
+        num = input('enter player num (1st or 2nd): ')
+        if num.isnumeric() and (num == '1' or num == '2'):
+            num = int(num)
+            break
+        print("Wrong Input")
     value = 0
     global board
 
     for turn in range(0, rows * cols):
         if (turn + num) % 2 == 1: # make the player go first, and make the user player as 'X'
-            r, c = [int(x) for x in input('Enter your move: ').split(' ')]
+            input_list = (1, 2, 3)
+            while True:
+                input_value = input('Enter your move: ').strip().split(' ')
+                if len(input_value) == 2 and input_value[0].isnumeric() and input_value[1].isnumeric():
+                    r = int(input_value[0])
+                    c = int(input_value[1])
+                    if r in input_list and c in input_list:
+                        break
+                print("Wrong Input")
             
             board[r - 1, c - 1] = 1
             print_board()
