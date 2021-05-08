@@ -129,14 +129,23 @@ def check_game_over(state):
     return -1
 
 
-def main():
+def check_restart_game():
+    value = input('Do you want to restart game? y/n ')
+    if value.lower() == 'y':
+        global board
+        board = np.zeros((rows, cols))
+        main(False)
+
+
+def main(show_directions=True):
     print_board()
 
-    print('Please move by command: row<space>column')
-    print('row column example: 2 2 (is middle point)')
-    print('')
-    print('player select example command is 1 or 2')
-    print('')
+    if show_directions:
+        print('Please move by command: row<space>column')
+        print('row column example: 2 2 (is middle point)')
+        print('')
+        print('player select example command is 1 or 2')
+        print('')
 
     while True:
         num = input('enter player num (1st or 2nd): ')
@@ -147,7 +156,10 @@ def main():
     value = 0
     global board
 
+    is_wined = False
     for turn in range(0, rows * cols):
+        is_wined = False
+
         if (turn + num) % 2 == 1: # make the player go first, and make the user player as 'X'
             input_list = (1, 2, 3)
             while True:
@@ -165,7 +177,8 @@ def main():
 
             if value == 1:
                 print('You win. Game Over')
-                sys.exit()
+                is_wined = True
+                break
             print('\n')
         else: # its the computer's turn make the PC always put a circle'
             # right now we know the state if the board was filled by the other player
@@ -178,9 +191,12 @@ def main():
 
             if value == 1:
                 print('PC wins. Game Over')
-                sys.exit()
+                is_wined = True
+                break
         
-    print('Its a draw')
+    if not is_wined:
+        print('Its a draw')
+    check_restart_game()
 
 
 if __name__ == "__main__":
